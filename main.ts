@@ -287,6 +287,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 sprites.onCreated(SpriteKind.made_colony, function (colony) {
     info.changeScoreBy(-1000)
     colonypoints += 1
+    number_of_colonies += 1
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.colony1, function (sprite, otherSprite) {
     if (info.score() > 1000) {
@@ -366,10 +367,6 @@ sprites.onOverlap(SpriteKind.Food, SpriteKind.Projectile, function (sprite, othe
     sprites.destroy(sprite, effects.warmRadial, 500)
     pause(500)
     info.changeScoreBy(randint(300, 600))
-})
-info.onScore(10000, function () {
-    game.setGameOverMessage(true, "YOU HAVE MADE A PROFITABLE EXPEDITION")
-    game.gameOver(true)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.colony3, function (sprite, otherSprite) {
     if (info.score() > 1000) {
@@ -937,6 +934,21 @@ speed_bar.setColor(5, 1)
 speed_bar.positionDirection(CollisionDirection.Bottom)
 speed_bar.setBarBorder(1, 15)
 myMinimap = myMinimap
+let number_of_colonies = 0
+let show_text = false
+game.onUpdate(function () {
+    if (info.score() > 10000) {
+        if (number_of_colonies < 6) {
+            if (show_text == false) {
+                game.showLongText("build all 6 trading posts to win", DialogLayout.Bottom)
+                show_text = true
+            }
+        } else {
+            game.setGameOverMessage(true, "YOU HAVE MADE A PROFITABLE EXPEDITION")
+            game.gameOver(true)
+        }
+    }
+})
 game.onUpdate(function () {
     pause(1)
     if (dx < 100 && dy < 100) {
@@ -1000,13 +1012,13 @@ forever(function () {
 })
 forever(function () {
     spawn_enemy()
-    pause(5000 / (info.score() / 2750))
+    pause(3500 / (info.score() / 3250))
 })
 forever(function () {
     big_enemy()
-    pause(25000 / (info.score() / 2750))
+    pause(22500 / (info.score() / 2750))
 })
 game.onUpdateInterval(100, function () {
-    info.changeScoreBy(colonypoints * 3)
+    info.changeScoreBy(colonypoints * 2)
     speed_bar.value += 1
 })
