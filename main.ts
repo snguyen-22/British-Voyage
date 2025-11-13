@@ -928,8 +928,8 @@ statusbar2.positionDirection(CollisionDirection.Top)
 statusbar2.setBarBorder(1, 15)
 speed_bar = statusbars.create(35, 7.5, StatusBarKind.Energy)
 speed_bar.setLabel("SPEED")
-speed_bar.max = 100
-speed_bar.value = 100
+speed_bar.max = 75
+speed_bar.value = 75
 speed_bar.setColor(5, 1)
 speed_bar.positionDirection(CollisionDirection.Bottom)
 speed_bar.setBarBorder(1, 15)
